@@ -1,0 +1,70 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}
+    {{ parent() }}Ajout_article
+{% endblock %}
+{% block titre %}
+    Ajout Article
+{% endblock %}
+
+
+
+{% block body %}
+    <div class="container">
+
+
+
+        <div class="row justify-content-center mb-5">
+
+            <div class="col-md-6">
+                {{ form_start(formu) }}
+                <div class="mt-2">
+                    <label for="">Nom</label>
+                    {{ form_row(formu.nom) }}
+                </div>
+                <div class="mt-2">
+                    <label for="">Prix</label>
+                    {{ form_row(formu.prix) }}
+                </div>
+                <div class="mt-2">
+                    <label for="">Référence</label>
+                    {{ form_row(formu.ref) }}
+                </div>
+                <div class="mt-2">
+                    <label for="">Description</label>
+                    {{ form_row(formu.description) }}
+                </div>
+                <div class="mt-2">
+                    <label for="">Catégorie</label>
+                    {{ form_row(formu.categorie) }}
+                </div>
+                <div class="mt-2">
+                    <label for="">Photo</label>
+                    {{ form_row(formu.photo, { 'attr':{"onChange": "loadFile(event)"} } ) }}
+                </div>
+                <div class="col-md-12 text-center">
+
+                    <img id="image" style='width:300px'>
+
+                </div>
+                <div class="mt-4">
+                    {{ form_row(formu.Valider) }}
+                </div>
+                {{ form_end(formu) }}
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        var loadFile = function (event) {
+            var image = document.getElementById('image');
+
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+    </script>
+{% endblock %}
+
+
+

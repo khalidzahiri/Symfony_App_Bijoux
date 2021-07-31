@@ -1,0 +1,59 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}
+ {{ parent() }}liste articles
+{% endblock %}
+{% block titre %}
+    Liste des articles
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ref</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+
+
+
+        <tbody>
+        {% for article in articles %}
+        <tr class="table-active">
+            <td>{{ article.id }}</td>
+            <td>{{ article.ref }}</td>
+            <td>{{ article.nom }}</td>
+            <td>{{ article.description }}</td>
+            <td>{{ article.categorie.nom }}</td>
+            <td><img src="{{ asset('Photos/') }}{{ article.photo }}" width="50" height="50" alt=""></td>
+            <td>{{ article.prix }}€</td>
+            <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <a href="" class="btn btn-primary nav-link active">Actions</a>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                            <a class="dropdown-item" href="{{ path('modif_article', {'id': article.id}) }}">Modifier</a>
+                            <a class="dropdown-item" href="{{ path('supprime_article', {'id': article.id}) }}">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+         </tbody>
+    </table>
+
+
+
+{% endblock %}
+
+
+

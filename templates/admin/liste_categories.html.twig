@@ -1,0 +1,48 @@
+{% extends 'backoffice.html.twig' %}
+
+
+{% block titre %}
+    Liste des catégories
+{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+    <table class="table table-hover ">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr class="table-active">
+                <td>{{ categorie.id }}</td>
+
+                <td>{{ categorie.nom }}</td>
+
+                <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <a href="" class="btn btn-primary nav-link active">Actions</a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <a class="dropdown-item" href="{{ path('modif_categorie', {id:categorie.id}) }}">Modifier</a>
+                                <a class="dropdown-item" href="{{ path('supprime_categorie', {id:categorie.id}) }}">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}Liste catégories
+{% endblock %}
+

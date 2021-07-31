@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block titre %}
+    Commandes passées
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for commande in commandes %}
+    <table class="table bg-white">
+        <thead class="thead-primary text-center">
+        <tr>
+            <th colspan="6">Commande N°{{ commande.id }} d'un montant total de {{ commande.montantTotal }}€ effectuée le {{ commande.date | date('d/m/Y') }}</th>
+        </tr>
+        <tr>
+            <th >Nom</th>
+            <th >Ref</th>
+            <th >Photo</th>
+            <th >Quantité</th>
+            <th >Prix Total</th>
+            <th >Action</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+
+
+
+        {% for item in commande.achats %}
+            <tr>
+                <td>{{  item.article.nom }}</td>
+                <td>{{ item.article.ref }}</td>
+                <td><img height="40" width="40" src="{{ asset('Photos/') }}{{ item.article.photo }}" alt="{{ item.article.nom }}"></td>
+
+                <td>{{  item.quantite }}</td>
+                <td>{{ item.article.prix * item.quantite }}</td>
+
+                <td>
+                    <a href=""><button class="btn btn-outline-danger btn-rounded" >Annuler</button></a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block title %}
+ {{ parent() }}Commandes
+{% endblock %}
+

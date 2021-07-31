@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-between mt-4">
+            {% for article in articles %}
+                <div class="col-md-4">
+                    <div style="width: 15rem" class="card mb-5">
+                        <img src="{{ asset('Photos/') }}{{ article.photo }}" height="200" alt="">
+
+                        <div class="card-body p-1 text-center">
+                            <h5 class="card-title">{{ article.nom }}</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <p class="card-text">{{ article.description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ article.prix }} €</li>
+                            <a href="{{ path('addcart', {id:article.id,param:'home'}) }}">
+                                <button type="button" class="btn btn-primary btn-sm w-100">
+                                    <i class="fas fa-shopping-cart fa-lg"></i>
+                                </button>
+                            </a>
+                        </ul>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center mb-5">
+            <div class="pagination-small ps-5 col-md-4 text-center">
+                {{ knp_pagination_render(articles) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block titre %}
+    Résultat de recherche
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}Résultat de recherche
+{% endblock %}
+

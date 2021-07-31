@@ -1,0 +1,40 @@
+{% extends 'backoffice.html.twig' %}
+
+
+
+{% block title %}
+    {{ parent() }}Ajout Promo
+{% endblock %}
+{% block titre %}
+    Ajout Promo
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="row justify-content-center mb-5">
+
+        <div class="col-md-6 ">
+
+
+            {{ form_start(formu) }}
+            <div class="mt-2">
+                <label for="">Nom</label>
+                {{ form_row(formu.nom) }}
+            </div>
+            <div class="mt-2">
+                <label for="">Montant de la remise</label>
+                {{ form_row(formu.remise) }}
+            </div>
+            <div class="mt-2">
+                <label for="">Montant minimum de la commande</label>
+                {{ form_row(formu.montantmin) }}
+            </div>
+            <div class="mt-4">
+                {{ form_row(formu.Valider) }}
+            </div>
+
+            {{ form_end(formu) }}
+        </div>
+    </div>
+{% endblock %}

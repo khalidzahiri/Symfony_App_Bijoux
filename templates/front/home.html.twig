@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ parent() }}Accueil
+{% endblock %}
+{% block titre %}
+    Bienvenue !!
+{% endblock %}
+
+
+
+{% block body %}
+    {# Bonjour {{ prenom }}, {{ nom }}, {{ age }} ans. <br> #}
+    {# Nous sommes le {{ "now" | date("d/m/Y") }}, il est {{ "now" | date("H:i:s") }} #}
+
+
+
+
+
+    {% for message in app.flashes('success') %}
+        <div class="row mt-4">
+            <div class="alert alert-success col-md-6 text-center">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="row justify-content-between ms-3 mt-4">
+        <div class="col-md-2">
+            {% if panier is not empty %}
+            <div style="font-size: 0.5rem;" class="me-3 text-center">
+                <a class="btn btn-primary" href="{{ path('cart') }}">Accéder à mon panier<i  class="fas fa-cart-arrow-down fa-sm"></i></a>
+            </div>
+            {% endif %}
+            <div class="list-group mb-4">
+
+                <form action="{{ path('homefilter') }}" method="post">
+                    <div class="form-group">
+                        <label for="exampleSelect1" class="form-label mt-4">Catégories</label>
+                        <select class="form-select" name="cat" id="exampleSelect1">
+                            <option value="all">Tous nos bijoux</option>
+                            {% for categorie in categories %}
+                                <option value="{{ categorie.id }}">{{ categorie.nom }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="pt-4">
+                        <label for="">Votre budget</label>
+                        <div class="range-wrap mt-4 ms-3 ">
+                            <div class="range-value" id="rangeV"></div>
+                            <input id="range" name="prixmax" type="range" min="50" max="1500" value="0" step="50">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+                </form>
+
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row justify-content-between">
+                {% for article in articles %}
+                    <div class="col-md-4">
+                        <div style="width: 15rem" class="card mb-5">
+
+                            <img src="{{ asset('Photos/') }}{{ article.photo }}" height="200" alt="">
+
+                            <div class="card-body p-1 text-center">
+                                <h5 class="card-title">{{ article.nom }}</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <p class="card-text">{{ article.description }}</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{ article.prix }} €</li>
+                                <a href="{{ path('addcart', {id:article.id,param:'home'}) }}">
+                                    <button type="button" class="btn btn-primary btn-sm w-100">
+                                        <i class="fas fa-shopping-cart fa-lg"></i>
+                                    </button>
+                                </a>
+                            </ul>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <div class="pagination-small ps-5 col-md-4 text-center">
+                {{ knp_pagination_render(articles) }}
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const
+            range = document.getElementById('range'),
+            rangeV = document.getElementById('rangeV'),
+            setValue = () => {
+                const
+                    newValue = Number((range.value - range.min) * 100 / (range.max - range.min)),
+                    newPosition = 10 - (newValue * 0.2);
+                rangeV.innerHTML = `<span>${range.value}</span>`;
+                rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+
+            };
+        document.addEventListener("DOMContentLoaded", setValue);
+        range.addEventListener('input', setValue);
+
+    </script>
+
+{% endblock %}

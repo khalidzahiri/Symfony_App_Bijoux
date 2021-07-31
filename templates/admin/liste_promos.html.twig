@@ -1,0 +1,57 @@
+{% extends 'backoffice.html.twig' %}
+{% block title %}
+    {{ parent() }}liste promos
+{% endblock %}
+{% block titre %}
+    Liste des codes promos
+{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Date_debut</th>
+            <th scope="col">Date_fin</th>
+            <th scope="col">Montant remise</th>
+            <th scope="col">Prix minimum achat</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+
+
+
+        <tbody>
+        {% for promo in promos %}
+            <tr class="table-active">
+                <td>{{ promo.id }}</td>
+                <td>{{ promo.nom }}</td>
+                <td>{{ promo.dateDebut | date('d-m-Y') }}</td>
+                <td>{{ promo.dateFin | date('d-m-Y') }}</td>
+                <td> - {{ promo.remise }}€</td>
+                <td> {{ promo.montantmin }}€</td>
+                <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <a href="" class="btn btn-primary nav-link active">Actions</a>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <a class="dropdown-item" href="">Modifier</a>
+                                <a class="dropdown-item" href="{{ path('supprime_promo', {'id': promo.id}) }}">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,53 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+#    ici on définit un encoder, on précise à symfony que l'on va utiliser l'algorithm bcrypt afin d'encoder un paramètre  dans l'entité User et donc dans la BDD
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    providers:
+#        les providers permettent de préciser à symfony où sont stockées les données à controler.
+#        Ici, pour nous dans la BDD, sur la table User sur le champs email
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+#        firewall=> quelle partie du site on va proteger et par quel moyen
+#
+#        on précise à symfony d'activer la protection par rapport à notre provider in_database
+
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: in_database
+
+            form_login:
+                login_path: login
+                check_path: login
+
+            logout:
+                path: logout
+                target: home
+
+#        ici on va préciser à symfony que la connexion va s'effectuer via un formulaire de connexion #dont on va preciser la route
+
+                #route pour se connecter
+                # precise la route sur laquelle il va devoir éffectuer les controles #sur l'email
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
